@@ -69,10 +69,11 @@ jobs:
       - uses: actions/setup-ruby@v1
         with:
           ruby-version: '2.6'
+
       - name: Download Artifact
-          uses: actions/download-artifact@v2
-          with:
-            path: artifact
+        uses: actions/download-artifact@v2
+        with:
+          path: artifact
 
       - uses: actions/cache@v2
         with:
