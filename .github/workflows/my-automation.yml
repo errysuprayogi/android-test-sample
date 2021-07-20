@@ -76,7 +76,8 @@ jobs:
 
       - uses: MeilCli/android-lint-statistics@v1.4.5
         with:
-          lint_xml_file_path: 'app/build/reports/lint-results-debug.xml' # change your lint result path
+          lint_xml_file_path: app/build/reports/lint-results-debug.xml
+
       - uses: MeilCli/slack-upload-file@v1
         with:
           slack_token: ${{ secrets.SLACK_TOKEN }}
