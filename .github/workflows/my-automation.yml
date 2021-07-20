@@ -92,6 +92,14 @@ jobs:
           name: lint-report
           path: app/build/reports/lint-results-debug.html
 
+      - uses: mshick/add-pr-comment@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.COMMENT_TOKEN }}
+        with:
+          message: |
+            **Lint report finished**
+          allow-repeats: false
+
   distribute-app:
     runs-on: windows-latest
     timeout-minutes: 30
