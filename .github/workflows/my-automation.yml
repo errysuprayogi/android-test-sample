@@ -33,6 +33,7 @@ jobs:
 
   upload-artifact:
     needs: build
+    runs-on: ubuntu-latest
     steps:
       - name: Upload base APK
         if: always()
