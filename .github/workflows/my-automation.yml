@@ -28,6 +28,11 @@ jobs:
       - name: Print Directory List
         run: ls -R app/build/reports
 
+      - uses: actions/upload-artifact@v2
+        with:
+          name: lint-report
+          path: app/build/reports/
+
   instrument-test:
     runs-on: ubuntu-latest
     timeout-minutes: 30
