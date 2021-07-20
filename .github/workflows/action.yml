@@ -36,6 +36,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gems-
 
+      - name: Run Android Lint
+        run: ./gradlew lintDebug --stacktrace
+
       - uses: MeilCli/danger-action@v5
         with:
           plugins_file: 'Gemfile'
@@ -45,7 +48,5 @@ jobs:
         env:
           DANGER_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Run Android Lint
-        run: ./gradlew lintDebug --stacktrace
 
 
