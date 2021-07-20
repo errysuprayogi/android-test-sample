@@ -46,7 +46,7 @@ jobs:
                           "pretext": "Built branch ${{ github.ref }}",
                           "author_name": "${{ github.actor }}",
                           "title": "${{ github.workflow }}",
-                          "title_link": "${{ github.action_path }}",
+                          "title_link": "${{ github.job }}",
                           "text": "Running Unit Test has ben complete"
                         }
                       ]
