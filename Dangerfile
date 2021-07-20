@@ -30,3 +30,4 @@ apkstats.min_sdk #=> String | Nil
 apkstats.target_sdk #=> String | Nils
 apkstats.reference_count #=> Fixnum
 apkstats.dex_count #=> Fixnum
+apkstats.compare_with(String, do_report: Boolean)
