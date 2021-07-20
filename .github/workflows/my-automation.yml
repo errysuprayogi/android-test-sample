@@ -45,8 +45,8 @@ jobs:
                           "color": "#36a64f",
                           "pretext": "Built branch ${{ github.ref }}",
                           "author_name": "${{ github.actor }}",
-                          "title": "${{ github.workflow }}",
-                          "title_link": "${{ github.job }}",
+                          "title": "${{ github.job }}",
+                          "title_link": "https://github.com/${{ github.actor }}/${{ github.repository }}/actions/runs/${{ github.run_id }}",
                           "text": "Running Unit Test has ben complete"
                         }
                       ]
