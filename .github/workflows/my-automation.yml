@@ -9,6 +9,27 @@ on:
       - action-firebase-testlab
 
 jobs:
+  unit-test:
+    runs-on: macOS-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Run Unit Test
+        run: ./gradlew testDebugUnitTest
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: unit-test-report
+          path: app/build/reports/tests
+
   lint-report:
     runs-on: macOS-latest
     timeout-minutes: 30
@@ -25,13 +46,10 @@ jobs:
       - name: Run lint report
         run: ./gradlew lintDebug
 
-      - name: Print Directory List
-        run: ls -R app/build/reports
-
       - uses: actions/upload-artifact@v2
         with:
           name: lint-report
-          path: app/build/reports/
+          path: app/build/reports/lint-results-debug.html
 
   instrument-test:
     runs-on: ubuntu-latest
@@ -52,22 +70,12 @@ jobs:
       - name: Build Test APK
         run: ./gradlew assembleDebugAndroidTest
 
-      - name: Print Directory List
-        run: ls -R app/build/outputs
-
-      - name: Upload base APK
+      - name: Archieve APK
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: base-apk
-          path: app/build/outputs/apk/debug/app-debug.apk
-
-      - name: Upload test APK
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-apk
-          path: app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+          name: build-apk
+          path: app/build/outputs/apk
 
       - name: Run tests on Firebase Test Lab
         uses: asadmansr/Firebase-Test-Lab-Action@v1.0
