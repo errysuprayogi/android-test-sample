@@ -133,9 +133,17 @@ jobs:
           appId: ${{secrets.FIREBASE_APP_ID}}
           token: ${{secrets.FIREBASE_TOKEN}}
           groups: testers
-          file: app/build/outputs/apk/release/app-release-unsigned.apk
+          file: app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Archieve APK
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: base-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
 
   instrument-test:
+    needs: distribute-app
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
@@ -157,8 +165,15 @@ jobs:
           restore-keys: |
               ${{ runner.os }}-gradle-
 
-      - name: Build Debug APK
-        run: ./gradlew assembleDebug
+      - name: Download base APK
+        uses: actions/download-artifact@v2
+        with:
+          name: base-apk
+          path: artifact/apk
+
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: artifact/apk
 
       - name: Build Test APK
         run: ./gradlew assembleDebugAndroidTest
@@ -167,8 +182,8 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: build-apk
-          path: app/build/outputs/apk
+          name: test-apk
+          path: app/build/outputs/apk/androidTest
 
       - name: Run tests on Firebase Test Lab
         uses: asadmansr/Firebase-Test-Lab-Action@v1.0
