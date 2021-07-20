@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  analyze-apk:
+  build-apk:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     if: github.event_name  == 'pull_request' # if only run pull request when multiple trigger workflow
@@ -58,7 +58,7 @@ jobs:
           name: lint-report
           path: app/build/reports/lint-results-debug.xml
 
-  danger:
+  integration:
     if: success()
     needs: [analyze-apk, android-lint]
     runs-on: ubuntu-latest
