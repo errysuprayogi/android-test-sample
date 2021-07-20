@@ -69,4 +69,4 @@ jobs:
         with:
           arg-spec: '.github/workflows/test-config.yml:android-pixel-4'
         env:
-          SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
+          SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
