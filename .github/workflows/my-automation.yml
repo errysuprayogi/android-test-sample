@@ -39,7 +39,22 @@ jobs:
           args: |
             {
               "channel": "U15CCJUE5",
-              "text": "Unit Test finished"
+              "attachments": [
+                        {
+                          "mrkdwn_in": ["text"],
+                          "color": "#36a64f",
+                          "pretext": "Built branch ${{ github.ref }}",
+                          "author_name": "${{ github.actor }}",
+                          "author_link": "http://flickr.com/bobby/",
+                          "author_icon": "https://placeimg.com/16/16/people",
+                          "title": "${{ github.workflow }}",
+                          "title_link": "https://api.slack.com/",
+                          "text": "Running Unit Test has ben complete",
+                          "thumb_url": "http://placekitten.com/g/200/200",
+                          "footer": "Github Actions",
+                          "footer_icon": "https://platform.slack-edge.com/img/default_application_icon.png",
+                        }
+                      ]
             }
 
 
