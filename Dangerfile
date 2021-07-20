@@ -19,14 +19,18 @@ android_lint.filtering = false
 android_lint.lint(inline_mode: true)
 
 # APK Stats
+apkstats.command_type=:apk_analyzer
 apkstats.apkanalyzer_path = ".github/apkanalyzer/apkanalyzer"
 apkstats.apk_filepath = "artifact/build-apk/app-debug.apk"
-apkstats.file_size #=> Fixnum
-apkstats.download_size #=> Fixnum
-apkstats.required_features #=> Array<String> | Nil
-apkstats.non_required_features #=> Array<String> | Nil
-apkstats.permissions #=> Array<String> | Nil
-apkstats.min_sdk #=> String | Nil
-apkstats.target_sdk #=> String | Nils
-apkstats.dex_count #=> Fixnum
-# apkstats.compare_with(String, do_report: Boolean)
+
+message(apkstats.file_size)
+message(apkstats.download_size)
+message(apkstats.required_features)
+message(apkstats.non_required_features)
+message(apkstats.permissions)
+message(apkstats.min_sdk)
+message(apkstats.target_sdk)
+message("#{apkstats.reference_count}")
+message("#{apkstats.dex_count}")
+
+# apkstats.compare_with('artifact/build-apk/app-debug.apk', do_report: true)
