@@ -54,7 +54,7 @@ jobs:
       - name: Archieve Report
         if: success()
         uses: actions/upload-artifact@v2
-          with:
+        with:
           name: lint-report
           path: app/build/reports/lint-results-debug.xml
 
