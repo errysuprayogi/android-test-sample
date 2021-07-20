@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - code-review
+  pull_request:
+    branches:
+      - master
 
 jobs:
   danger:
