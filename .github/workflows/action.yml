@@ -60,7 +60,7 @@ jobs:
 
   integration:
     if: success()
-    needs: [analyze-apk, android-lint]
+    needs: [build-apk, android-lint]
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
