@@ -6,7 +6,7 @@ on:
       - action-firebase-testlab
   pull_request:
     branches:
-      - action-firebase-testlab
+      - master
 
 jobs:
   build-apk:
