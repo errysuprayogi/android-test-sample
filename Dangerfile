@@ -28,6 +28,5 @@ apkstats.non_required_features #=> Array<String> | Nil
 apkstats.permissions #=> Array<String> | Nil
 apkstats.min_sdk #=> String | Nil
 apkstats.target_sdk #=> String | Nils
-apkstats.reference_count #=> Fixnum
 apkstats.dex_count #=> Fixnum
-apkstats.compare_with(String, do_report: Boolean)
+# apkstats.compare_with(String, do_report: Boolean)
