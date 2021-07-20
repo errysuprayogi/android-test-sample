@@ -17,24 +17,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Copy CI gradle.properties
-        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
-
       - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
           java-version: 11
 
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches/modules-*
-            ~/.gradle/caches/jars-*
-            ~/.gradle/caches/build-cache-*
-          key: gradle-${{ hashFiles('checksum.txt') }}
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
 
-      - name: Build project
-        run: ./gradlew build test --stacktrace
+      - name: Build Test APK
+        run: ./gradlew assembleDebugAndroidTest
 
       - name: Print Directory List
         run: ls -R app/build
