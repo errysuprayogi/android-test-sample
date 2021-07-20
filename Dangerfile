@@ -20,3 +20,6 @@ android_lint.lint(inline_mode: true)
 
 # APK Analyzer
 apkanalyzer.apk_file = "artifact/build-apk/app-debug.apk"
+apkanalyzer.file_size
+apkanalyzer.permissions
+apkanalyzer.method_references
