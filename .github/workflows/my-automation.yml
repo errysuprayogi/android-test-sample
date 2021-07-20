@@ -87,12 +87,14 @@ jobs:
       - name: Run lint report
         run: ./gradlew lintDebug
 
-      - uses: actions/upload-artifact@v2
+      - name: Archieve artifact
+        uses: actions/upload-artifact@v2
         with:
           name: lint-report
           path: app/build/reports/lint-results-debug.html
 
-      - uses: mshick/add-pr-comment@v1
+      - name: Post PR comment
+        uses: mshick/add-pr-comment@v1
         env:
           GITHUB_TOKEN: ${{ secrets.COMMENT_TOKEN }}
         with:
