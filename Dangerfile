@@ -12,11 +12,11 @@ message("Thank you for your work @#{github.pr_author} 🎉 You might find a few 
 
 
 # AndroidLint
-android_lint.report_file = "app/build/reports/lint-results-debug.xml"
+android_lint.report_file = "artifact/lint-results-debug.xml"
 android_lint.skip_gradle_task = true
 android_lint.severity = "Warning"
 android_lint.filtering = false
 android_lint.lint(inline_mode: true)
 
 # APK Analyzer
-apkanalyzer.apk_file = "app/build/outputs/apk/debug/app-debug.apk"
+apkanalyzer.apk_file = "artifact/app-debug.apk"

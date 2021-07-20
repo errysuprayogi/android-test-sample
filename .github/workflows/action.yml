@@ -26,18 +26,19 @@ jobs:
               ${{ runner.os }}-gradle-
       - name: Build APK
         run: ./gradlew assembleDebug
+      - name: Archieve APK
+          if: success()
+          uses: actions/upload-artifact@v2
+          with:
+            name: build-apk
+            path: app/build/outputs/apk/debug/app-debug.apk
 
-
-  danger:
+  android-lint:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     if: github.event_name  == 'pull_request' # if only run pull request when multiple trigger workflow
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-ruby@v1
-        with:
-          ruby-version: '2.6'
-
       - uses: actions/cache@v2
         with:
           path: |
@@ -47,9 +48,31 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+      - name: Build APK
+        run: ./gradlew lintDebug
 
-      - name: Run Android Lint
-        run: ./gradlew lintDebug --stacktrace
+      - name: Archieve Report
+          if: success()
+          uses: actions/upload-artifact@v2
+          with:
+            name: lint-report
+            path: app/build/reports/lint-results-debug.xml
+
+  danger:
+    if: success()
+    needs: [analyze-apk, android-lint]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: github.event_name  == 'pull_request' # if only run pull request when multiple trigger workflow
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.6'
+      - name: Download Artifact
+          uses: actions/download-artifact@v2
+          with:
+            path: artifact
 
       - uses: actions/cache@v2
         with:
