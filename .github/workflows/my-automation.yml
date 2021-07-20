@@ -124,8 +124,8 @@ jobs:
           restore-keys: |
               ${{ runner.os }}-gradle-
 
-      - name: Build Release APK
-        run: ./gradlew assembleRelease
+      - name: Build APK
+        run: ./gradlew assembleDebug
 
       - name: Upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
