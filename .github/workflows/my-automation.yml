@@ -143,6 +143,7 @@ jobs:
           path: app/build/outputs/apk/debug/app-debug.apk
 
   instrument-test:
+    if: success()
     needs: distribute-app
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -178,7 +179,7 @@ jobs:
       - name: Build Test APK
         run: ./gradlew assembleDebugAndroidTest
 
-      - name: Archieve APK
+      - name: Archieve Test APK
         if: always()
         uses: actions/upload-artifact@v2
         with:
