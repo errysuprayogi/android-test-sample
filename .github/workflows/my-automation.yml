@@ -91,12 +91,12 @@ jobs:
         run: ./gradlew assembleRelease
 
       - name: Upload artifact to Firebase App Distribution
-          uses: wzieba/Firebase-Distribution-Github-Action@v1
-          with:
-            appId: ${{secrets.FIREBASE_APP_ID}}
-            serviceCredentialsFile: ${{secrets.FIREBASE_SERVICE_ACCOUNT}}
-            groups: testers
-            file: app/build/outputs/apk/release/app-release-unsigned.apk
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{secrets.FIREBASE_APP_ID}}
+          serviceCredentialsFile: ${{secrets.FIREBASE_SERVICE_ACCOUNT}}
+          groups: testers
+          file: app/build/outputs/apk/release/app-release-unsigned.apk
 
   instrument-test:
     runs-on: ubuntu-latest
