@@ -9,6 +9,25 @@ on:
       - master
 
 jobs:
+  analyze-apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: github.event_name  == 'pull_request' # if only run pull request when multiple trigger workflow
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: |
+              ~/.gradle/caches/modules-*
+              ~/.gradle/caches/jars-*
+              ~/.gradle/caches/build-cache-*
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+              ${{ runner.os }}-gradle-
+      - name: Build APK
+        run: ./gradlew assembleDebug
+
+
   danger:
     runs-on: ubuntu-latest
     timeout-minutes: 30

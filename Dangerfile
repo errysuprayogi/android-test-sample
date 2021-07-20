@@ -17,3 +17,6 @@ android_lint.skip_gradle_task = true
 android_lint.severity = "Warning"
 android_lint.filtering = false
 android_lint.lint(inline_mode: true)
+
+# APK Analyzer
+apkanalyzer.apk_file = "app/build/outputs/apk/debug/app-debug.apk"
