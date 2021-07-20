@@ -29,15 +29,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - uses: actions/cache@v1
+      - name: Run Android Lint
+        run: ./gradlew lintDebug --stacktrace
+
+      - uses: actions/cache@v2
         with:
           path: vendor/bundle
           key: ${{ runner.os }}-gems-${{ hashFiles('Gemfile') }} # change your gemfile path
           restore-keys: |
             ${{ runner.os }}-gems-
-
-      - name: Run Android Lint
-        run: ./gradlew lintDebug --stacktrace
 
       - uses: MeilCli/danger-action@v5
         with:
