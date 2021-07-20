@@ -48,15 +48,6 @@ jobs:
       - name: Run tests on Firebase Test Lab
         uses: asadmansr/Firebase-Test-Lab-Action@v1.0
         with:
-          arg-spec:
-            android-pixel-4:
-              type: instrumentation
-              app: app/build/outputs/apk/debug/app-debug.apk
-              test: app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
-              device:
-                - model: flame
-                  version: 29
-                  locale: 'en'
-                  orientation: portrait
+          arg-spec: '.github/workflows/test-config.yml:android-pixel-4'
         env:
           SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
