@@ -192,12 +192,11 @@ jobs:
     timeout-minutes: 30
 
     steps:
-      -
       - name: Download base APK
-          uses: actions/download-artifact@v2
-          with:
-            name: base-apk
-            path: artifact/apk
+        uses: actions/download-artifact@v2
+        with:
+          name: base-apk
+          path: artifact/apk
 
       - name: Upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
