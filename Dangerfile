@@ -18,8 +18,15 @@ android_lint.severity = "Warning"
 android_lint.filtering = false
 android_lint.lint(inline_mode: true)
 
-# APK Analyzer
-apkanalyzer.apk_file = "artifact/build-apk/app-debug.apk"
-apkanalyzer.file_size
-apkanalyzer.permissions
-apkanalyzer.method_references
+# APK Stats
+apkstats.apkanalyzer_path = ".github/apkanalyzer/apkanalyzer"
+apkstats.apk_filepath = "artifact/build-apk/app-debug.apk"
+apkstats.file_size #=> Fixnum
+apkstats.download_size #=> Fixnum
+apkstats.required_features #=> Array<String> | Nil
+apkstats.non_required_features #=> Array<String> | Nil
+apkstats.permissions #=> Array<String> | Nil
+apkstats.min_sdk #=> String | Nil
+apkstats.target_sdk #=> String | Nils
+apkstats.reference_count #=> Fixnum
+apkstats.dex_count #=> Fixnum
