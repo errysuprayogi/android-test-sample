@@ -30,6 +30,19 @@ jobs:
           name: unit-test-report
           path: app/build/reports/tests
 
+      - name: Notify Slack
+        if: ${{ success() }}
+        uses: hbfernandes/slack-action@1.0
+        env:
+          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        with:
+          args: |
+            {
+              "channel": "U15CCJUE5",
+              "text": "Unit Test finished"
+            }
+
+
   lint-report:
     runs-on: macOS-latest
     timeout-minutes: 30
