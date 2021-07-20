@@ -88,7 +88,7 @@ jobs:
           java-version: 11
 
       - name: Build Release APK
-          run: ./gradlew assembleRelease
+        run: ./gradlew assembleRelease
 
       - name: Upload artifact to Firebase App Distribution
           uses: wzieba/Firebase-Distribution-Github-Action@v1
