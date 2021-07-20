@@ -29,4 +29,4 @@ jobs:
         run: ./gradlew assembleDebugAndroidTest
 
       - name: Print Directory List
-        run: ls -R app/build
+        run: ls -R app/build/outputs
