@@ -31,6 +31,9 @@ jobs:
       - name: Print Directory List
         run: ls -R app/build/outputs
 
+  upload-artifact:
+    needs: build
+    steps:
       - name: Upload base APK
           if: always()
           uses: actions/upload-artifact@v2
@@ -38,9 +41,9 @@ jobs:
             name: base-apk
             path: app/build/outputs/apk/debug/app-debug.apk
 
-      - name: Upload test APK
-          if: always()
-          uses: actions/upload-artifact@v2
-            with:
-              name: test-apk
-              path: app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+            - name: Upload test APK
+                if: always()
+                uses: actions/upload-artifact@v2
+                  with:
+                    name: test-apk
+                    path: app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
