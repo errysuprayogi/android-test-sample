@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "448660797021",
+    "firebase_url": "https://torrid-heat-3134.firebaseio.com",
+    "project_id": "torrid-heat-3134",
+    "storage_bucket": "torrid-heat-3134.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:448660797021:android:e48fcd7ad78bbdd77e7fb4",
+        "android_client_info": {
+          "package_name": "com.example.android.architecture.blueprints.reactive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "448660797021-hd68aapp2fm94cllf2cqi4gg2onn51cd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADaV56uDPgsfk_UBPyx7BTGcyxMKCqfZ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "448660797021-hd68aapp2fm94cllf2cqi4gg2onn51cd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

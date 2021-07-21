@@ -1,0 +1,173 @@
+name: my-automation
+
+on:
+  push:
+    branches:
+      - action-firebase-testlab
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  unit-test:
+    runs-on: windows-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Run Unit Test
+        run: ./gradlew testDebugUnitTest
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: unit-test-report
+          path: app/build/reports/tests
+
+      - name: Notify Slack
+        if: ${{ success() }}
+        uses: hbfernandes/slack-action@1.0
+        env:
+          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+        with:
+          args: |
+            {
+              "channel": "${{ secrets.SLACK_CHANNELS }}",
+              "attachments": [
+                        {
+                          "mrkdwn_in": ["text"],
+                          "color": "#36a64f",
+                          "pretext": "Built branch ${{ github.ref }}",
+                          "author_name": "${{ github.actor }}",
+                          "title": "${{ github.job }}",
+                          "title_link": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+                          "text": "Running Unit Test has ben complete"
+                        }
+                      ]
+            }
+
+
+  lint-report:
+    runs-on: macOS-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Run lint report
+        run: ./gradlew lintDebug
+
+      - name: Archieve artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: lint-report
+          path: app/build/reports/lint-results-debug.html
+
+      - name: Post PR comment
+        uses: mshick/add-pr-comment@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          message: |
+            **Lint report finished**
+          allow-repeats: false
+
+  instrument-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - uses: actions/cache@v2
+        with:
+          path: |
+              ~/.gradle/caches
+              ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+              ${{ runner.os }}-gradle-
+
+      - name: Build APK
+        run: ./gradlew assembleDebug
+
+      - name: Archieve APK
+        if: success()
+        uses: actions/upload-artifact@v2
+        with:
+          name: base-apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+          
+      - name: Build Test APK
+        run: ./gradlew assembleDebugAndroidTest
+
+      - name: Archieve Test APK
+        if: always()
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-apk
+          path: app/build/outputs/apk/androidTest
+
+      - name: Run tests on Firebase Test Lab
+        uses: asadmansr/Firebase-Test-Lab-Action@v1.0
+        with:
+          arg-spec: '.github/firebase-test-labs/config.yml:android-pixel-4'
+        env:
+          SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+
+  distribute-app:
+    if: success()
+    needs: [unit-test, lint-report, instrument-test]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Download base APK
+        uses: actions/download-artifact@v2
+        with:
+          name: base-apk
+          path: artifact/apk
+
+      - name: Upload artifact to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{secrets.FIREBASE_APP_ID}}
+          token: ${{secrets.FIREBASE_TOKEN}}
+          groups: testers
+          file: artifact/apk/app-debug.apk
