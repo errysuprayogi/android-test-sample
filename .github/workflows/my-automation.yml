@@ -124,11 +124,6 @@ jobs:
           restore-keys: |
               ${{ runner.os }}-gradle-
 
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: artifact/apk
-
-
       - name: Build APK
         run: ./gradlew assembleDebug
 
