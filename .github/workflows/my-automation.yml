@@ -103,8 +103,6 @@ jobs:
           allow-repeats: false
 
   instrument-test:
-    if: success()
-    needs: build-apk
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
