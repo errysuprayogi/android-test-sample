@@ -1,3 +1,5 @@
+![example workflow](https://github.com/errysuprayogi/android-test-sample/actions/workflows/my-automation.yml/badge.svg?branch=action-firebase-testlab)
+
 TO-DO Notes - Code for 5.1-5.3 Testing Codelab
 ============================================================================
 
